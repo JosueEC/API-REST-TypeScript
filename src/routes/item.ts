@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { logMiddleware } from '../middlewares/log.middleware'
 import {
   getItem,
   getItems,
@@ -10,7 +11,7 @@ import {
 const router = Router()
 
 //! http://localhost:3000/items [GET]
-router.get('/', getItems)
+router.get('/', logMiddleware, getItems)
 
 router.get('/:id', getItem)
 
