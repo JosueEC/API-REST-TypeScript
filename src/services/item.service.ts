@@ -11,7 +11,13 @@ const getCars = async () => {
   return responseItems
 }
 
+const getCar = async (id:string) => {
+  const responseItem = await ItemModel.findById({ _id: id })
+  return responseItem
+}
+
 export {
   insertCar,
-  getCars
+  getCars,
+  getCar
 }

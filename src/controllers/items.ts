@@ -1,16 +1,18 @@
 import { Request, Response } from "express"
 import { handleHTTP } from "../utils/error.handler"
-import { insertCar, getCars } from "../services/item.service"
+import { insertCar, getCars, getCar } from "../services/item.service"
 
-const getItem = (_req:Request, res:Response) => {
+const getItem = async ({ params }: Request, res: Response) => {
   try {
-    
+    const { id } = params
+    const responseItem = await getCar(id)
+    res.status(200).send(responseItem)
   } catch (error) {
     handleHTTP(res, 'ERROR_GET_ITEM')
   }
 }
 
-const getItems = async (_req:Request, res:Response) => {
+const getItems = async (_req: Request, res: Response) => {
   try {
     const responseItems = await getCars()
     res.status(200).send(responseItems) 
@@ -19,7 +21,7 @@ const getItems = async (_req:Request, res:Response) => {
   }
 }
 
-const postItem = async ({ body }:Request, res:Response) => {
+const postItem = async ({ body }: Request, res: Response) => {
   try {
     const responseItem = await insertCar(body)
     res.status(200).send(responseItem)
@@ -28,7 +30,7 @@ const postItem = async ({ body }:Request, res:Response) => {
   }
 }
 
-const updateItem = (_req:Request, res:Response) => {
+const updateItem = (_req: Request, res: Response) => {
   try {
     
   } catch (error) {
@@ -36,7 +38,7 @@ const updateItem = (_req:Request, res:Response) => {
   }
 }
 
-const deletItem = (_req:Request, res:Response) => {
+const deletItem = (_req: Request, res: Response) => {
   try {
   
   } catch (error) {
