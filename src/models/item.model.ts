@@ -1,23 +1,32 @@
-import { Schema, Types, model, Model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { Car } from '../interfaces/car.interface'
 
 const ItemSchema = new Schema < Car > (
   {
     color: {
-      type: String
+      type: String,
+      required: true
     },
     gas: {
       type: String,
+      required: true,
       enum: ['gasoline', 'electric']
     },
     year: {
-      type: Number
+      type: Number,
+      required: true
     },
     description: {
-      type: String
+      type: String,
+      required: true
     },
     price: {
-      type: Number
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
     }
   },
   {
