@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { handleHTTP } from "../utils/error.handler"
 
-const getItem = (req:Request, res:Response) => {
+const getItem = (_req:Request, res:Response) => {
   try {
     
   } catch (error) {
@@ -9,7 +9,7 @@ const getItem = (req:Request, res:Response) => {
   }
 }
 
-const getItems = (req:Request, res:Response) => {
+const getItems = (_req:Request, res:Response) => {
   try {
     
   } catch (error) {
@@ -25,7 +25,7 @@ const postItem = ({ body }:Request, res:Response) => {
   }
 }
 
-const updateItem = (req:Request, res:Response) => {
+const updateItem = (_req:Request, res:Response) => {
   try {
     
   } catch (error) {
@@ -33,7 +33,7 @@ const updateItem = (req:Request, res:Response) => {
   }
 }
 
-const deletItem = (req:Request, res:Response) => {
+const deletItem = (_req:Request, res:Response) => {
   try {
   
   } catch (error) {

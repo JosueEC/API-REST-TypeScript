@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express'
 
 const router = Router()
 
-router.use('/', (req:Request, res:Response) => {
+router.use('/', (_req:Request, res:Response) => {
   res.send({ data: 'blogs GET'})
 })
 
