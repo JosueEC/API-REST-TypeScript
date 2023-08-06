@@ -17,9 +17,9 @@ const getItems = (req:Request, res:Response) => {
   }
 }
 
-const postItem = (req:Request, res:Response) => {
+const postItem = ({ body }:Request, res:Response) => {
   try {
-    
+    res.send(body)
   } catch (error) {
     handleHTTP(res, 'ERROR_POST_ITEM')
   }
