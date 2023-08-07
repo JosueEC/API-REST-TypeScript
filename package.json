@@ -4,7 +4,9 @@
   "description": "API REST example built with TypeScript and Express",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/app.ts"
+    "dev": "nodemon ./src/app.ts",
+    "build": "tsc",
+    "start": "node ./dist/app.js"
   },
   "author": "Josue Evangelista Cruz",
   "license": "ISC",
