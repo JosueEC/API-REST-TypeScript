@@ -5,7 +5,8 @@ import dbConnect from './config/mongo'
 
 import routes from './routes'
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
+// const PORT = process.env.PORT || 3001
 
 const server = express()
 
@@ -15,7 +16,9 @@ server.use(cors({
 
 server.use(express.json())
 
-dbConnect().then(() => console.info('Connected to database'))
+dbConnect()
+  .then(() => console.info('Connected to database'))
+  .catch((error) => console.error(error.message))
 
 server.listen(PORT, () => {
   console.info('Server listening on port', PORT)
