@@ -1,6 +1,6 @@
-import { Auth } from "./auth.interface";
+import { Auth } from './auth.interface'
 
 export interface User extends Auth {
-  name: string,
+  name: string
   description: string
 }
