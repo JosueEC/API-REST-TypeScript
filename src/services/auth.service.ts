@@ -3,33 +3,34 @@ import { Auth } from '../interfaces/auth.interface'
 import { encrypt, verified } from '../utils/bcrypt.handle'
 import { generateToken } from '../utils/jwt.handle'
 import UserModel from '../models/user.model'
+import { Session } from '../interfaces/session.interface'
 
-const registerNewUser = async ({ email, password, name }: User) => {
-  const checkIs = await UserModel.findOne({ email })
-  if (checkIs) return { message: 'USER_ALREADY_EXIST' }
+const registerNewUser = async ({ email, password, name }: User): Promise <User> => {
+  const user = await UserModel.findOne({ email })
+  if (user != null) throw new Error('USER_ALREADY_EXIST')
 
-  const passwordHash = await encrypt(password)
-  const responseRegister = await UserModel.create({
+  const hashPassword = await encrypt(password)
+  const response = await UserModel.create({
     email,
-    password: passwordHash,
+    password: hashPassword,
     name
   })
-  return responseRegister
+  return response
 }
 
-const loginUser = async ({ email, password }: Auth) => {
-  const checkIs = await UserModel.findOne({ email })
-  if (!checkIs) return { message: 'USER_NOT_FOUND' }
+const loginUser = async ({ email, password }: Auth): Promise <Session> => {
+  const user = await UserModel.findOne({ email })
+  if (user == null) throw new Error('USER_NOT_FOUND')
 
-  const passwordHash = checkIs.password
-  const isCorrect = await verified(password, passwordHash)
+  const hashPassword = user.password
+  const isCorrect = await verified(password, hashPassword)
 
-  if (!isCorrect) return { message: 'INCORRECT_PASSWORD' }
+  if (!isCorrect) throw new Error('INVALID_CREDENTIALS')
 
-  const token = generateToken(checkIs.email)
+  const token = generateToken(user.email)
   const dataUser = {
     token,
-    user: checkIs
+    user
   }
 
   return dataUser

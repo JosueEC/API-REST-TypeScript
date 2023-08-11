@@ -5,23 +5,16 @@ import {
   loginUser
 } from '../services/auth.service'
 
-const registerController = async ({ body }: Request, res: Response) => {
-  try {
-    const responseRegister = await registerNewUser(body)
-    res.status(200).send(responseRegister)
-  } catch (error) {
-    handleHTTP(res, 'ERROR_REGISTER_USER', error)
-  }
+const registerController = ({ body }: Request, res: Response): void => {
+  registerNewUser(body)
+    .then((response) => res.status(200).send(response))
+    .catch((error) => handleHTTP(res, 'ERROR_REGISTER_USER', error))
 }
 
-const loginController = async ({ body }: Request, res: Response) => {
-  try {
-    const { email, password } = body
-    const responseLogin = await loginUser({ email, password })
-    res.status(200).send(responseLogin)
-  } catch (error) {
-    handleHTTP(res, 'ERROR_USER_LOGIN', error)
-  }
+const loginController = ({ body }: Request, res: Response): void => {
+  loginUser(body)
+    .then((response) => res.status(200).send(response))
+    .catch((error) => handleHTTP(res, 'ERROR_USER_LOGIN', error))
 }
 
 export {
