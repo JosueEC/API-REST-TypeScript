@@ -1,7 +1,7 @@
 import { Category } from '../interfaces/category.interface'
 import CategoryModel from '../models/category.model'
 
-const findCategory = async (): Promise<Category[]> => {
+const findCategories = async (): Promise<Category[]> => {
   const response = await CategoryModel.find({})
   return response
 }
@@ -20,7 +20,7 @@ const removeCategory = async (id: string): Promise<Category> => {
 }
 
 export {
-  findCategory,
+  findCategories,
   saveCategory,
   removeCategory
 }
