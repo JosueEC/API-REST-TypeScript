@@ -1,14 +1,19 @@
 import { Router } from 'express'
+import {
+  getCategories,
+  postCategory,
+  deleteCategory
+} from '../controllers/category'
 
 const router = Router()
 
 // * http://localhost:3000/category
-router.get('/')
+router.get('/', getCategories)
 
 // * http://localhost:3000/category
-router.post('/')
+router.post('/', postCategory)
 
 // * http://localhost:3000/category
-router.delete('/')
+router.delete('/', deleteCategory)
 
 export { router }
