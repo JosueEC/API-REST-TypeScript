@@ -3,6 +3,7 @@ import { handleHTTP } from '../utils/error.handler'
 import {
   findPosts,
   findOnePost,
+  findOneByTitle,
   savePost,
   updatePost,
   removePost
@@ -19,6 +20,16 @@ const getPostByID = ({ params }: Request, res: Response): void => {
   findOnePost(id)
     .then((response) => res.status(200).send(response))
     .catch((error) => handleHTTP(res, 'ERROR_FIND_USER', error))
+}
+
+const getPostByTitle = ({ query }: Request, res: Response): void => {
+  const { title } = query
+
+  if (typeof title !== 'string') throw new Error('The query must be a string')
+
+  findOneByTitle(title)
+    .then((response) => res.status(200).send(response))
+    .catch((error) => handleHTTP(res, 'ERROR_GET_POST', error))
 }
 
 const createPost = ({ body }: Request, res: Response): void => {
@@ -44,6 +55,7 @@ const deletePost = ({ params }: Request, res: Response): void => {
 export {
   getPosts,
   getPostByID,
+  getPostByTitle,
   createPost,
   putPost,
   deletePost

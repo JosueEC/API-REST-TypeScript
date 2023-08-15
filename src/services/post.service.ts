@@ -13,6 +13,13 @@ const findOnePost = async (id: string): Promise<Post> => {
   return response
 }
 
+const findOneByTitle = async (query: string): Promise<Post> => {
+  const response = await PostModel.findOne({ title: query })
+
+  if (response == null) throw new Error('POST_NOT_FOUND')
+  return response
+}
+
 const savePost = async ({ title, description, author }: Post): Promise<Post> => {
   const response = await PostModel.create({
     title,
@@ -41,6 +48,7 @@ const removePost = async (id: string): Promise<Post> => {
 export {
   findPosts,
   findOnePost,
+  findOneByTitle,
   savePost,
   updatePost,
   removePost
