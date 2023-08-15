@@ -18,6 +18,26 @@ const findManyByTtitle = async (query: string): Promise <Post[]> => {
   return response
 }
 
+const findPostWithUser = async (title: string): Promise<Object[]> => {
+  const response = await PostModel.aggregate(
+    [
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'userAuthor'
+        }
+      },
+      { $unwind: '$userAuthor' },
+      { $match: { title } }
+    ]
+  )
+
+  if (response == null) throw new Error('POST_NOT_FOUND')
+  return response
+}
+
 const savePost = async ({ title, description, author }: Post): Promise<Post> => {
   const response = await PostModel.create({
     title,
@@ -47,6 +67,7 @@ export {
   findPosts,
   findOnePost,
   findManyByTtitle,
+  findPostWithUser,
   savePost,
   updatePost,
   removePost
