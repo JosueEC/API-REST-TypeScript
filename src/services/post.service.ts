@@ -13,8 +13,12 @@ const findOnePost = async (id: string): Promise<Post> => {
   return response
 }
 
-const savePost = async (post: Post): Promise<Post> => {
-  const response = await PostModel.create(post)
+const savePost = async ({ title, description, author }: Post): Promise<Post> => {
+  const response = await PostModel.create({
+    title,
+    description,
+    author
+  })
   return response
 }
 

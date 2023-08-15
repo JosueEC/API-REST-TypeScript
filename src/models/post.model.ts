@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { Post } from '../interfaces/post.interface'
 
 const PostSchema = new Schema <Post>(
@@ -12,7 +12,8 @@ const PostSchema = new Schema <Post>(
       required: true
     },
     author: {
-      type: Types.ObjectId,
+      type: Schema.ObjectId,
+      ref: 'users',
       required: true
     }
   },
