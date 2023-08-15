@@ -4,12 +4,14 @@ import { readdirSync } from 'fs'
 const PATH_ROUTER = `${__dirname}`
 const router = Router()
 
-const cleanFileName = (fileName:string) => {
+const cleanFileName = (fileName: string): string => {
   const file = fileName.split('.').shift()
+
+  if (file == null) throw new Error('File problem')
   return file
 }
 
-readdirSync(PATH_ROUTER).filter((fileName) => {
+readdirSync(PATH_ROUTER).filter((fileName): string => {
   const cleanName = cleanFileName(fileName)
   if (cleanName !== 'index') {
     import(`./${cleanName}`)
@@ -17,7 +19,9 @@ readdirSync(PATH_ROUTER).filter((fileName) => {
         console.info(`Loading route... /${cleanName}`)
         router.use(`/${cleanName}`, moduleRouter.router)
       })
+      .catch((error) => console.error(error))
   }
+  return ''
 })
 
 export default router

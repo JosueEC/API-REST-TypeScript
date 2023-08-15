@@ -24,4 +24,4 @@ router.put('/:id', putPost)
 // * http://localhost:3000/post [DELETE]
 router.delete('/:id', deletePost)
 
-export default router
+export { router }
