@@ -3,13 +3,18 @@ import { handleHTTP } from '../utils/error.handler'
 import {
   findPosts,
   findOnePost,
-  findOneByTitle,
+  findManyByTtitle,
   savePost,
   updatePost,
   removePost
 } from '../services/post.service'
 
-const getPosts = (_req: Request, res: Response): void => {
+const getPosts = (req: Request, res: Response): void => {
+  if (req.query.title !== undefined) {
+    getManyPostByTtitle(req, res)
+    return
+  }
+
   findPosts()
     .then((response) => res.status(200).send(response))
     .catch((error) => handleHTTP(res, 'ERROR_GET_POSTS', error))
@@ -22,14 +27,14 @@ const getPostByID = ({ params }: Request, res: Response): void => {
     .catch((error) => handleHTTP(res, 'ERROR_FIND_USER', error))
 }
 
-const getPostByTitle = ({ query }: Request, res: Response): void => {
+const getManyPostByTtitle = ({ query }: Request, res: Response): void => {
   const { title } = query
 
-  if (typeof title !== 'string') throw new Error('The query must be a string')
+  if (typeof title !== 'string') throw new Error('The title must be a string value')
 
-  findOneByTitle(title)
+  findManyByTtitle(title)
     .then((response) => res.status(200).send(response))
-    .catch((error) => handleHTTP(res, 'ERROR_GET_POST', error))
+    .catch((error) => handleHTTP(res, 'ERROR_GET_MANY_POSTS', error))
 }
 
 const createPost = ({ body }: Request, res: Response): void => {
@@ -55,7 +60,7 @@ const deletePost = ({ params }: Request, res: Response): void => {
 export {
   getPosts,
   getPostByID,
-  getPostByTitle,
+  getManyPostByTtitle,
   createPost,
   putPost,
   deletePost
