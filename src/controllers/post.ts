@@ -13,6 +13,7 @@ import {
   removePost
 } from '../services/post.service'
 
+// * Chain of Responsibility (Cadena de Responsabilidad) (Patron de Comportamiento)
 const getPosts = (req: Request, res: Response): void => {
   const filters = [
     getPostById,
