@@ -1,7 +1,7 @@
 import { Router } from 'express'
+import { getPostById } from '../filters/controllers/post.filtercontroller'
 import {
   getPosts,
-  getPostByID,
   createPost,
   putPost,
   deletePost
@@ -13,7 +13,7 @@ const router = Router()
 router.get('/', getPosts)
 
 // * http://localhost:3000/post/:id [GET]
-router.get('/:id', getPostByID)
+router.get('/:id', getPostById)
 
 // * http://localhost:3000/post [POST]
 router.post('/', createPost)

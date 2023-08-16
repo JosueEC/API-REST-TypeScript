@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { handleHTTP } from '../../utils/error.handler'
 import {
   findOnePost,
@@ -14,33 +14,52 @@ const handleGetPosts = (_req: Request, res: Response): void => {
     .catch(error => handleHTTP(res, 'ERROR_GET_POSTS', error))
 }
 
-const getPostById = ({ params }: Request, res: Response): void => {
+const getPostById = ({ params }: Request, res: Response, next: NextFunction): void => {
   const { id } = params
-  findOnePost(id)
-    .then(response => res.status(200).send(response))
-    .catch(error => handleHTTP(res, 'ERROR_GET_POST', error))
+
+  if (id === undefined) {
+    next()
+  } else {
+    findOnePost(id)
+      .then(response => res.status(200).send(response))
+      .catch(error => handleHTTP(res, 'ERROR_GET_POST', error))
+  }
 }
 
-const filterPostByTitle = ({ query }: Request, res: Response): void => {
+const filterPostByTitle = ({ query }: Request, res: Response, next: NextFunction): void => {
   const { title } = query
 
-  if (typeof title !== 'string') throw new Error('The title must be a text value')
-
-  findPostsByTitle(title)
-    .then(response => res.status(200).send(response))
-    .catch(error => handleHTTP(res, 'ERROR_GET_POST_BY_TITLE', error))
+  if (typeof title !== 'string') {
+    next()
+  } else {
+    findPostsByTitle(title)
+      .then(response => res.status(200).send(response))
+      .catch(error => handleHTTP(res, 'ERROR_GET_POST_BY_TITLE', error))
+  }
 }
 
-const getPostsWithAuthor = (_req: Request, res: Response): void => {
-  findPostWithAuthor()
-    .then(response => res.status(200).send(response))
-    .catch(error => handleHTTP(res, 'ERROR_GET_POSTS&AUTHOR', error))
+const getPostsWithAuthor = ({ query }: Request, res: Response, next: NextFunction): void => {
+  const { author } = query
+
+  if (author !== 'true') {
+    next()
+  } else {
+    findPostWithAuthor()
+      .then(response => res.status(200).send(response))
+      .catch(error => handleHTTP(res, 'ERROR_GET_POSTS&AUTHOR', error))
+  }
 }
 
-const getPostsWithCategories = (_req: Request, res: Response): void => {
-  findPostWithCategories()
-    .then(response => res.status(200).send(response))
-    .catch(error => handleHTTP(res, 'ERROR_GET_POSTS&CATEGORIES', error))
+const getPostsWithCategories = ({ query }: Request, res: Response, next: NextFunction): void => {
+  const { addCategories } = query
+
+  if (addCategories !== 'true') {
+    next()
+  } else {
+    findPostWithCategories()
+      .then(response => res.status(200).send(response))
+      .catch(error => handleHTTP(res, 'ERROR_GET_POSTS&CATEGORIES', error))
+  }
 }
 
 export {

@@ -22,15 +22,15 @@ const getPosts = (req: Request, res: Response): void => {
     handleGetPosts
   ]
 
-  // let index = 0
+  let index = 0
 
-  // const nextFilter = () => {
-  //   const currentFilter = filters[index]
-  //   index++
-  //   currentFilter(req, res, nextFilter)
-  // }
+  const nextFilter = (): void => {
+    const currentFilter = filters[index]
+    index++
+    currentFilter(req, res, nextFilter)
+  }
 
-  // nextFilter()
+  nextFilter()
 }
 
 const createPost = ({ body }: Request, res: Response): void => {
