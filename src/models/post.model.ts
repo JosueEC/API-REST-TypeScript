@@ -16,9 +16,9 @@ const PostSchema = new Schema <Post>(
       ref: 'users',
       required: true
     },
-    categories: [{
-      name: String
-    }]
+    categories: {
+      type: Array(String)
+    }
   },
   {
     timestamps: false,
