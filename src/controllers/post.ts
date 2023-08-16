@@ -1,56 +1,36 @@
 import { Request, Response } from 'express'
 import { handleHTTP } from '../utils/error.handler'
 import {
-  findPosts,
-  findOnePost,
-  findManyByTtitle,
-  findPostWithUser,
+  handleGetPosts,
+  getPostById,
+  filterPostByTitle,
+  getPostsWithAuthor,
+  getPostsWithCategories
+} from '../filters/controllers/post.filtercontroller'
+import {
   savePost,
   updatePost,
   removePost
 } from '../services/post.service'
 
 const getPosts = (req: Request, res: Response): void => {
-  if (req.query.author === 'true') {
-    getPostsWithUser(req, res)
-    return
-  }
+  const filters = [
+    getPostById,
+    filterPostByTitle,
+    getPostsWithAuthor,
+    getPostsWithCategories,
+    handleGetPosts
+  ]
 
-  if (req.query.title !== undefined) {
-    getManyPostByTtitle(req, res)
-    return
-  }
+  // let index = 0
 
-  findPosts()
-    .then((response) => res.status(200).send(response))
-    .catch((error) => handleHTTP(res, 'ERROR_GET_POSTS', error))
-}
+  // const nextFilter = () => {
+  //   const currentFilter = filters[index]
+  //   index++
+  //   currentFilter(req, res, nextFilter)
+  // }
 
-const getPostsWithUser = ({ query }: Request, res: Response): void => {
-  const { title } = query
-
-  if (typeof title !== 'string') throw new Error('The title must be a string value')
-
-  findPostWithUser(title)
-    .then((response) => res.status(200).send(response))
-    .catch((error) => handleHTTP(res, 'ERROR_GET_POST_WITH_USER', error))
-}
-
-const getPostByID = ({ params }: Request, res: Response): void => {
-  const { id } = params
-  findOnePost(id)
-    .then((response) => res.status(200).send(response))
-    .catch((error) => handleHTTP(res, 'ERROR_FIND_USER', error))
-}
-
-const getManyPostByTtitle = ({ query }: Request, res: Response): void => {
-  const { title } = query
-
-  if (typeof title !== 'string') throw new Error('The title must be a string value')
-
-  findManyByTtitle(title)
-    .then((response) => res.status(200).send(response))
-    .catch((error) => handleHTTP(res, 'ERROR_GET_MANY_POSTS', error))
+  // nextFilter()
 }
 
 const createPost = ({ body }: Request, res: Response): void => {
@@ -75,9 +55,6 @@ const deletePost = ({ params }: Request, res: Response): void => {
 
 export {
   getPosts,
-  getPostByID,
-  getManyPostByTtitle,
-  getPostsWithUser,
   createPost,
   putPost,
   deletePost

@@ -18,7 +18,7 @@ const findCategoryWithPosts = async (): Promise<Object[]> => {
           pipeline: [ // pipeline son filtros basados en lo que queremos obtener, por estos filtros pasa el valor de la variable padre. pipeline tiene scope sobre la coleccion hija
             {
               $match: {
-                $expr: { // Dentro de $expr podemos hacer uso de los operadores de mongo para establecer filtros de coincidencias en base a lo que deseamos obtenero. A traves del simbolo de peso podemos acceder a los valores de los campos de la coleccion hija, y a traves del doble $$ podemos acceder a las variables delcaradas en let. Las variables llegan con el tipo de dato que tienen, si son arrays, llegan arrays, si son strings, llegan strings, etc
+                $expr: { // Dentro de $expr podemos hacer uso de los operadores de mongo para establecer filtros de coincidencias en base a lo que deseamos obtenero. A traves del simbolo de peso podemos acceder a los valores de los campos de la coleccion hija, y a traves del doble $$ podemos acceder a las variables delcaradas en let. Las variables llegan con el tipo de dato que tienen, si son arrays, llegan arrays, si son strings, llegan strings, etc. El primer parametro es la cadena de busqueda y el segundo es el array en donde se va a buscar la existencia de la cadena de busqueda
                   $in: ['$$aliasCategory', '$categories']
                 }
               }
