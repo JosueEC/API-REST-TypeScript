@@ -1,7 +1,9 @@
-import { ObjectId } from 'mongoose'
+import { ObjectId, Document } from 'mongoose'
+import { Category } from './category.interface'
 
-export interface Post {
+export interface Post extends Document {
   title: String
   description: String
   author: ObjectId
+  categories: Category[]
 }

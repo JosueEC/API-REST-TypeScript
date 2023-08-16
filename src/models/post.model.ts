@@ -15,7 +15,10 @@ const PostSchema = new Schema <Post>(
       type: Schema.ObjectId,
       ref: 'users',
       required: true
-    }
+    },
+    categories: [{
+      name: String
+    }]
   },
   {
     timestamps: false,

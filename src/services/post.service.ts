@@ -38,11 +38,12 @@ const findPostWithUser = async (title: string): Promise<Object[]> => {
   return response
 }
 
-const savePost = async ({ title, description, author }: Post): Promise<Post> => {
+const savePost = async ({ title, description, author, categories }: Post): Promise<Post> => {
   const response = await PostModel.create({
     title,
     description,
-    author
+    author,
+    categories
   })
   return response
 }
